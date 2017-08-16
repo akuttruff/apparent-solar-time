@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import ReactDOM from 'react-dom';
 import { createStore } from 'redux';
 import { Provider, connect } from 'react-redux';
-import Counter from './Counter.jsx';
+import Form from './Form.jsx';
 import updateAddress from './actions/updateAddress.jsx';
 import reducers from './reducers/reducers.js';
 
@@ -27,7 +27,7 @@ function mapDispatchToProps(dispatch) {
 const App = connect(
     mapStateToProps,
     mapDispatchToProps
-)(Counter);
+)(Form);
 
 ReactDOM.render(
     <Provider store={store}>
