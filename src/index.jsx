@@ -5,9 +5,9 @@ import { createStore } from 'redux';
 import { Provider, connect } from 'react-redux';
 import Counter from './Counter.jsx';
 import updateAddress from './actions/updateAddress.jsx';
-import address from './reducers/address.jsx';
+import reducers from './reducers/reducers.js';
 
-const store = createStore(address);
+const store = createStore(reducers);
 
 // Map Redux state to component props
 function mapStateToProps(state) {
