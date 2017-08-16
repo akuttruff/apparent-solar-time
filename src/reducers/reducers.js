@@ -1,8 +1,8 @@
 import { combineReducers } from 'redux';
-import addressReducer from './addressReducer.jsx';
+import address from './address.jsx';
 
 const reducers = combineReducers({
-    addressReducer
+    address
 });
 
 export default reducers;

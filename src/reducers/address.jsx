@@ -1,14 +1,14 @@
 import { ADDRESS } from '../constants'
 
-const addressReducer = ( state = { address: " " }, action ) => {
+const address = ( state = { address: " " }, action ) => {
     switch (action.type) {
         case ADDRESS:
             return Object.assign({}, state, {
                 address: action.address
             });
         default:
-
+            return state;
     }
 }
 
-export default addressReducer;
+export default address;
