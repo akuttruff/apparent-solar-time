@@ -30,7 +30,7 @@
     "babel-loader": "^7.0.0",
     "moment": "^2.18.1",
     "react": "^15.5.4",
-    "react-datepicker": "^0.53.0",
+    "react-date-range": "^0.9.4",
     "react-dom": "^15.5.4"
   },
   "main": "server.js"
