@@ -1,22 +1,32 @@
 import React, { Component } from 'react';
-import { DateRange } from 'react-date-range';
+import moment from 'moment';
+import { DateRangePicker } from 'react-dates'
 
 class DateRangeSelector extends Component {
-    handleSelect(range){
-        console.log(range);
-        // An object with two keys,
-        // 'startDate' and 'endDate' which are Momentjs objects.
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            focusedInput: null,
+            startDate: moment(), // set your initial start date here
+            endDate: moment()
+        };
     }
 
-    render(){
+    handleRangeChange(startDate, endDate) {
+        this.setState({ startDate, endDate });
+        this.props.onRangeChange({startDate, endDate})
+    }
+
+    render() {
         return (
-            <div>
-                <DateRange
-                    onInit={this.handleSelect}
-                    onChange={this.handleSelect}
-                    calendars={1}
-                />
-            </div>
+            <DateRangePicker
+                startDate={this.state.startDate}
+                endDate={this.state.endDate}
+                onDatesChange={({ startDate, endDate }) => this.handleRangeChange(startDate, endDate)}
+                focusedInput={this.state.focusedInput}
+                onFocusChange={focusedInput => this.setState({ focusedInput })}
+            />
         )
     }
 }

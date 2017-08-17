@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { DayPickerRangeController } from 'react-dates';
+import DateRangeSelector from './DateRangeSelector.jsx';
 import 'react-dates/lib/css/_datepicker.css';
 
 class Form extends Component {
@@ -21,7 +21,13 @@ class Form extends Component {
         this.setState({address: event.target.value});
     }
 
+    onRangeChange(range) {
+        this.setState({ range });
+    }
+
+
     render() {
+        console.log(this.state);
         return (
             <div>
                 <form onSubmit={this.handleSubmit}>
@@ -29,6 +35,7 @@ class Form extends Component {
                         Name:
                         <input type="text" value={this.state.address} onChange={this.handleChange}/>
                     </label>
+                    <DateRangeSelector onRangeChange={this.onRangeChange.bind(this)}/>
                     <input type="submit" value="Submit"/>
                 </form>
             </div>
