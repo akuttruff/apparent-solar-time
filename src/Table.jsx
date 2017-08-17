@@ -4,7 +4,8 @@ class Table extends Component {
 
     render() {
         const { data, range } = this.props;
-        console.log(this.props);
+        const { sunrise, sunset, solar_noon, day_length, nautical_twilight_begin } = data;
+
         return (
             <div>
                 <h1></h1>

@@ -18,7 +18,7 @@ class App extends Component {
         $.ajax({
             url: `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}`,
             type: 'GET',
-            success: (data) => this.setState({ data })
+            success: (data) => this.setState({ data: data.results })
         });
     }
 
@@ -33,6 +33,10 @@ class App extends Component {
             type: 'GET',
             success: (data) => this.onFetchLocationSuccess(data)
         });
+    }
+
+    mapRangeToDates(range) {
+
     }
 
     onRangeChange(range) {
