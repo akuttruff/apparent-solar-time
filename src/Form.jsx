@@ -24,16 +24,13 @@ class Form extends Component {
     render() {
         return (
             <div>
-                <h1>Hello</h1>
-                <span>{this.state.address}</span>
                 <form onSubmit={this.handleSubmit}>
                     <label>
                         Name:
-                        <input type="text" value={this.state.address} onChange={this.handleChange} />
+                        <input type="text" value={this.state.address} onChange={this.handleChange}/>
                     </label>
-                    <input type="submit" value="Submit" />
+                    <input type="submit" value="Submit"/>
                 </form>
-                <h1>  </h1>
             </div>
         )
     }
