@@ -1,7 +1,7 @@
 import $ from 'jquery';
 import { apiKey } from '../config.js';
 
-const loadLocationFromServer = (address) => {
+const fetchLocation = (address) => {
     $.ajax({
         url: `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${apiKey}`,
         type: 'GET',
@@ -13,5 +13,5 @@ const loadLocationFromServer = (address) => {
     });
 };
 
-export default loadLocationFromServer;
+export default fetchLocation;
 
