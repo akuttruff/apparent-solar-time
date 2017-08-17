@@ -25,7 +25,6 @@ class Form extends Component {
         this.setState({ range });
     }
 
-
     render() {
         console.log(this.state);
         return (
