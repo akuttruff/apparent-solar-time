@@ -3,6 +3,10 @@ import Form from './Form.jsx';
 import Table from './Table.jsx';
 import $ from 'jquery';
 import { apiKey } from '../config.js';
+import Moment from 'moment';
+import { extendMoment } from 'moment-range';
+
+const moment = extendMoment(Moment);
 
 class App extends Component {
     constructor() {
@@ -14,17 +18,35 @@ class App extends Component {
         }
     }
 
-    fetchTimeZone( lat, lng ) {
-        $.ajax({
-            url: `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}`,
-            type: 'GET',
-            success: (data) => this.setState({ data: data.results })
-        });
+    getDateRange({ startDate = {}, endDate = {} }) {
+        const now = startDate.clone(), dates = [];
+
+        while (now.isBefore(endDate) || now.isSame(endDate)) {
+            dates.push(now.format('YYYY-MM-DD'));
+            now.add('days', 1);
+        }
+        return dates;
+    }
+
+    fetchSolarData(lat, lng) {
+        const dates = this.getDateRange(this.state.range);
+        let solarData = [];
+
+        Promise.all(dates.map((date) => {
+            return Promise.resolve(
+                $.ajax({
+                    url: `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&date=${date}`,
+                    type: 'GET'
+                })).then((data) => {
+                solarData.push({ [ date ]: data.results })
+            });
+        }));
+        this.setState({ solarData })
     }
 
     onFetchLocationSuccess(data) {
         const { lat, lng } = data.results[0].geometry.location;
-        this.fetchTimeZone(lat, lng);
+        const formattedData = this.fetchSolarData(lat, lng);
     }
 
     fetchLocation(address) {
@@ -35,21 +57,18 @@ class App extends Component {
         });
     }
 
-    mapRangeToDates(range) {
-
-    }
-
     onRangeChange(range) {
         this.setState({ range });
     }
 
     render() {
+        console.log(this.state.solarData);
+
         return (
             <div>
                 <Form fetchLocation={this.fetchLocation.bind(this)}
                       onRangeChange={this.onRangeChange.bind(this)}/>
-                <Table data={this.state.data}
-                       range={this.state.range}/>
+                <Table data={this.state.solarData}/>
             </div>
         );
     }
