@@ -44,7 +44,8 @@ class App extends Component {
             <div>
                 <Form fetchLocation={this.fetchLocation.bind(this)}
                       onRangeChange={this.onRangeChange.bind(this)}/>
-
+                <Table data={this.state.data}
+                       range={this.state.range}/>
             </div>
         );
     }
