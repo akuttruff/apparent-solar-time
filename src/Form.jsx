@@ -21,10 +21,6 @@ class Form extends Component {
         this.setState({address: event.target.value});
     }
 
-    onRangeChange(range) {
-        this.setState({ range });
-    }
-
     render() {
 
         return (
@@ -34,7 +30,7 @@ class Form extends Component {
                         Name:
                         <input type="text" value={this.state.address} onChange={this.handleChange}/>
                     </label>
-                    <DateRangeSelector onRangeChange={this.onRangeChange.bind(this)}/>
+                    <DateRangeSelector onRangeChange={this.props.onRangeChange}/>
                     <input type="submit" value="Submit"/>
                 </form>
             </div>
