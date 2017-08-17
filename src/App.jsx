@@ -38,7 +38,8 @@ class App extends Component {
                     url: `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&date=${date}`,
                     type: 'GET'
                 })).then((data) => {
-                solarData.push({ [ date ]: data.results })
+                Object.assign(data.results, { date } );
+                solarData.push({ data: data.results })
             });
         }));
 
