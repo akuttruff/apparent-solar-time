@@ -38,7 +38,7 @@ class App extends Component {
                 type: 'GET',
                 success: (data) => {
                     Object.assign(data.results, { date });
-                    solarData.push({ data: data.results })
+                    solarData.push({ data })
                 }
             })
         });
@@ -67,6 +67,7 @@ class App extends Component {
 
     render() {
         const { solarData } = this.state;
+        console.log('app state', this.state)
 
         return (
             <div>

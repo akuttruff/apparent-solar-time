@@ -29,10 +29,12 @@
   "dependencies": {
     "babel-loader": "^7.0.0",
     "jquery": "^3.2.1",
+    "lodash": "^4.17.4",
     "moment": "^2.18.1",
     "moment-range": "^3.0.3",
     "react": "^15.5.4",
     "react-addons-shallow-compare": "^15.6.0",
+    "react-date-range": "^0.9.4",
     "react-dates": "^12.4.0",
     "react-dom": "^15.5.4"
   },

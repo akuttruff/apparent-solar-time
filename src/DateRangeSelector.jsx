@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import moment from 'moment';
-import { DateRangePicker } from 'react-dates'
+import { DateRange } from 'react-date-range';
 
 class DateRangeSelector extends Component {
     constructor(props) {
@@ -11,24 +11,48 @@ class DateRangeSelector extends Component {
             startDate: moment(),
             endDate: moment().add(7, 'days')
         };
+
+        this.handleSelect = this.handleSelect.bind(this);
     }
 
-    handleRangeChange(startDate, endDate) {
-        this.setState({ startDate, endDate });
-        this.props.onRangeChange({startDate, endDate})
+    handleSelect(range){
+        this.props.onRangeChange(range);
+        // An object with two keys,
+        // 'startDate' and 'endDate' which are Momentjs objects.
     }
 
-    render() {
+    render(){
         return (
-            <DateRangePicker
-                startDate={this.state.startDate}
-                endDate={this.state.endDate}
-                onDatesChange={({ startDate, endDate }) => this.handleRangeChange(startDate, endDate)}
-                focusedInput={this.state.focusedInput}
-                onFocusChange={focusedInput => this.setState({ focusedInput })}
-            />
+            <div>
+                <DateRange
+                    onInit={() => {}}
+                    onChange={this.handleSelect}
+                />
+            </div>
         )
     }
+
+    // constructor(props) {
+    //     super(props);
+    //
+    // }
+    //
+    // handleRangeChange(startDate, endDate) {
+    //     this.setState({ startDate, endDate });
+    //     this.props.onRangeChange({startDate, endDate})
+    // }
+    //
+    // render() {
+    //     return (
+    //         <DateRangePicker
+    //             startDate={this.state.startDate}
+    //             endDate={this.state.endDate}
+    //             onDatesChange={({ startDate, endDate }) => this.handleRangeChange(startDate, endDate)}
+    //             focusedInput={this.state.focusedInput}
+    //             onFocusChange={focusedInput => this.setState({ focusedInput })}
+    //         />
+    //     )
+    // }
 }
 
 export default DateRangeSelector;
