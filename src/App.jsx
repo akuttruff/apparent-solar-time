@@ -9,7 +9,8 @@ class App extends Component {
         super();
 
         this.state = {
-            location: {}
+            range: {},
+            data: {}
         }
     }
 
@@ -39,13 +40,11 @@ class App extends Component {
     }
 
     render() {
-        console.log(this.state);
-
         return (
             <div>
                 <Form fetchLocation={this.fetchLocation.bind(this)}
                       onRangeChange={this.onRangeChange.bind(this)}/>
-                <Table data={this.state.data} />
+
             </div>
         );
     }
