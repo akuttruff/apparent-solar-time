@@ -32,19 +32,21 @@ class App extends Component {
         const dates = this.getDateRange(this.state.range);
         let solarData = [];
 
-        Promise.all(dates.map((date) => {
-            return Promise.resolve(
-                $.ajax({
-                    url: `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&date=${date}`,
-                    type: 'GET'
-                })).then((data) => {
-                Object.assign(data.results, { date } );
-                solarData.push({ data: data.results })
-            });
-        }));
+        dates.forEach((date) => {
+            $.ajax({
+                url: `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&date=${date}`,
+                type: 'GET',
+                success: (data) => {
+                    Object.assign(data.results, { date });
+                    solarData.push({ data: data.results })
+                }
+            })
+        });
 
         this.setState({ solarData })
     }
+
+
 
     onFetchLocationSuccess(data) {
         const { lat, lng } = data.results[0].geometry.location;
@@ -64,11 +66,13 @@ class App extends Component {
     }
 
     render() {
+        const { solarData } = this.state;
+
         return (
             <div>
                 <Form fetchLocation={this.fetchLocation.bind(this)}
                       onRangeChange={this.onRangeChange.bind(this)}/>
-                <Table solarData={this.state.solarData}/>
+                { solarData && <Table solarData={this.state.solarData}/> }
             </div>
         );
     }
