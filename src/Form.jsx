@@ -12,18 +12,17 @@ class Form extends Component {
     }
 
     handleSubmit(event) {
-        this.setState({address: this.state.address});
-        alert('A name was submitted: ' + this.state.address);
         event.preventDefault();
+        this.setState({address: this.state.address});
+        this.props.onLoadLocationFromServer(this.state.address);
     }
 
     handleChange(event) {
         this.setState({address: event.target.value});
-        console.log(this.state.address);
     }
 
     render() {
-        const { address, onUpdateAddress } = this.props;
+        const { onLoadLocationFromServer } = this.props;
 
         return (
             <div>
@@ -35,8 +34,8 @@ class Form extends Component {
                         <input type="text" value={this.state.address} onChange={this.handleChange} />
                     </label>
                     <input type="submit" value="Submit" />
-                    {/*<DateRangePicker />*/}
                 </form>
+                <h1>  </h1>
             </div>
         )
     }

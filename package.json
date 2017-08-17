@@ -28,6 +28,7 @@
   },
   "dependencies": {
     "babel-loader": "^7.0.0",
+    "jquery": "^3.2.1",
     "moment": "^2.18.1",
     "react": "^15.5.4",
     "react-date-range": "^0.9.4",
