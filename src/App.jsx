@@ -73,7 +73,7 @@ class App extends Component {
             <div>
                 <Form fetchLocation={this.fetchLocation.bind(this)}
                       onRangeChange={this.onRangeChange.bind(this)}/>
-                { solarData && <Table solarData={this.state.solarData}/> }
+                <Table solarData={this.state.solarData}/>
             </div>
         );
     }

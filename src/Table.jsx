@@ -2,27 +2,41 @@ import React, { Component } from 'react';
 import _ from 'lodash';
 
 class Table extends Component {
+    constructor(props) {
+        super();
+
+        this.state = {
+            solarData: props.solarData
+        }
+    }
+
+    componentWillReceiveProps(nextProps) {
+        this.setState({ solarData: nextProps.solarData });
+    }
 
     getDataRows(data) {
-        data.forEach((day) => {
-            console.log(day);
-            const { date, sunrise, sunset } = day.data.results;
+        if (data) {
+            data.forEach((day) => {
+                console.log(day);
+                const { date, sunrise, sunset } = day.data.results;
 
-            console.log('date', date, 'sunrise', sunrise, 'sunset', sunset)
-            return (
-                <tr>
-                    <td>
-                        { date }
-                    </td>
-                    <td>
-                        { sunrise }
-                    </td>
-                    <td>
-                        { sunset }
-                    </td>
-                </tr>
-            )
-        });
+                console.log('date', date, 'sunrise', sunrise, 'sunset', sunset)
+                return (
+                    <tr>
+                        <td>
+                            { date  }
+                        </td>
+                        <td>
+                            { sunrise }
+                        </td>
+                        <td>
+                            { sunset }
+                        </td>
+                    </tr>
+                )
+            });
+        }
+
     }
 
     getHeaderRow() {
@@ -42,12 +56,12 @@ class Table extends Component {
     }
 
     render() {
-        const { solarData } = this.props;
+        console.log('table stat', this.state)
 
         return (
             <table>
                 { this.getHeaderRow() }
-                { this.getDataRows(solarData) }
+                { this.getDataRows(this.state.solarData) }
             </table>
         )
     }
