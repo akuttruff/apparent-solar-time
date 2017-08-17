@@ -14,7 +14,7 @@ class Form extends Component {
     handleSubmit(event) {
         event.preventDefault();
         this.setState({address: this.state.address});
-        this.props.onLoadLocationFromServer(this.state.address);
+        this.props.fetchLocation(this.state.address);
     }
 
     handleChange(event) {
@@ -22,8 +22,6 @@ class Form extends Component {
     }
 
     render() {
-        const { onLoadLocationFromServer } = this.props;
-
         return (
             <div>
                 <h1>Hello</h1>
