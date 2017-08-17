@@ -26,7 +26,6 @@ class DateRangeSelector extends Component {
                 onDatesChange={({ startDate, endDate }) => this.handleRangeChange(startDate, endDate)}
                 focusedInput={this.state.focusedInput}
                 onFocusChange={focusedInput => this.setState({ focusedInput })}
-                minimumNights={7}
             />
         )
     }
