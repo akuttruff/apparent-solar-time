@@ -18,7 +18,7 @@ class App extends Component {
         }
     }
 
-    getDateRange({ startDate = {}, endDate = {} }) {
+    getDateRange({ startDate, endDate }) {
         const now = startDate.clone(), dates = [];
 
         while (now.isBefore(endDate) || now.isSame(endDate)) {
@@ -41,6 +41,7 @@ class App extends Component {
                 solarData.push({ [ date ]: data.results })
             });
         }));
+
         this.setState({ solarData })
     }
 
@@ -62,13 +63,11 @@ class App extends Component {
     }
 
     render() {
-        console.log(this.state.solarData);
-
         return (
             <div>
                 <Form fetchLocation={this.fetchLocation.bind(this)}
                       onRangeChange={this.onRangeChange.bind(this)}/>
-                <Table data={this.state.solarData}/>
+                <Table solarData={this.state.solarData}/>
             </div>
         );
     }
