@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import Grid from './Grid.jsx';
+import App from './App.jsx';
 require("../styles/application.scss");
 
-ReactDOM.render(<Grid />, document.getElementById('react-root'));
+ReactDOM.render(<App />, document.getElementById('react-root'));

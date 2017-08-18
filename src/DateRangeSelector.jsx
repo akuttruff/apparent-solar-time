@@ -21,7 +21,8 @@ class DateRangeSelector extends Component {
                 <DateRange
                     onInit={this.handleSelect}
                     onChange={this.handleSelect}
-                    calendars={1}
+                    calendars={2}
+                    linkedCalendars={true}
                     startDate={defaultStartDate}
                     endDate={defaultEndDate}
                 />

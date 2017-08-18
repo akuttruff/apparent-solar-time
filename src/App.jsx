@@ -6,7 +6,7 @@ import { apiKey } from '../config.js';
 import { Table } from './Table.jsx';
 import moment from 'moment';
 
-class Form extends Component {
+class App extends Component {
     constructor(props) {
         super(props);
         this.state = {address: '', range: {}, solarData: []};
@@ -111,4 +111,4 @@ class Form extends Component {
     }
 }
 
-export default Form;
+export default App;

@@ -13,8 +13,8 @@ function HeaderRow() {
             <td> Date:</td>
             <td> Sunrise:</td>
             <td> Sunset:</td>
-            <td> rfNauticalAfternoon</td>
-            <td> Day length:</td>
+            <td> rfNoon:</td>
+            <td> Length:</td>
         </tr>
     );
 }
