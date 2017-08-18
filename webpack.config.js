@@ -12,21 +12,23 @@ module.exports = {
     filename: 'bundle.js',
     publicPath: '/build/'
   },
-  module: {
-    loaders: [
-      {
-        test: /\.jsx?$/,
-        loaders: ['babel-loader'],
-        include: path.join(__dirname, 'src')
-      },
-        {
-            test: /\.scss$/,
-            loaders: [ "style-loader", "css-loader", "sass-loader" ]
-        },
-        {
-            test: /\.css$/,
-            loaders: [ "style-loader", "css-loader" ]
-        }
-    ]
-  }
+    module: {
+        loaders: [
+            {
+                test: /\.jsx?$/,
+                loaders: [ 'babel-loader' ],
+                include: [
+                    path.join(__dirname, 'src'),
+                    path.join(__dirname, 'test') ]
+            },
+            {
+                test: /\.scss$/,
+                loaders: [ "style-loader", "css-loader", "sass-loader" ]
+            },
+            {
+                test: /\.css$/,
+                loaders: [ "style-loader", "css-loader" ]
+            }
+        ]
+    }
 }
