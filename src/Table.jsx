@@ -44,4 +44,4 @@ function Table({ solarData }) {
     );
 }
 
-export default Table;
+export { Table, HeaderRow };

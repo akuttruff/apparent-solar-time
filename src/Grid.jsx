@@ -3,7 +3,7 @@ import DateRangeSelector from './DateRangeSelector.jsx';
 import 'react-dates/lib/css/_datepicker.css';
 import $ from 'jquery';
 import { apiKey } from '../config.js';
-import Table from './Table.jsx';
+import { Table } from './Table.jsx';
 import moment from 'moment';
 
 class Form extends Component {
@@ -44,13 +44,15 @@ class Form extends Component {
         let solarData = [];
 
         dates.forEach((date) => {
+            console.log('lat', lat, lng)
             $.ajax({
-                url: `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&date=${date}`,
+                url: `https://api.sunrise-sunset.org/json?lat=${lat.toString()}&lng=${lng.toString()}&date=${date}`,
                 type: 'GET',
                 success: (data) => {
                     Object.assign(data.results, { date });
                     solarData.push({ data });
                     this.setState({ solarData });
+                    console.log(solarData)
                 }
             })
         });
@@ -65,8 +67,12 @@ class Form extends Component {
         $.ajax({
             url: `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${apiKey}`,
             type: 'GET',
-            success: (data) => this.onFetchLocationSuccess(data)
+            success: (data) => {
+                this.onFetchLocationSuccess(data)
+                console.log('location data', data)
+            }
         });
+
     }
 
     renderTableData(solarData) {
