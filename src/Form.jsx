@@ -3,6 +3,7 @@ import DateRangeSelector from './DateRangeSelector.jsx';
 import 'react-dates/lib/css/_datepicker.css';
 import $ from 'jquery';
 import { apiKey } from '../config.js';
+import Table from './Table.jsx';
 import moment from 'moment';
 
 class Form extends Component {
@@ -68,34 +69,12 @@ class Form extends Component {
         });
     }
 
+    renderTableData(solarData) {
+        return <Table solarData={solarData} />
+    }
+
     render() {
         const { address, range, solarData } = this.state;
-
-        const sortedData = this.state.solarData.reverse();
-        const rows = sortedData.map((day) => {
-            const { date, sunrise, sunset, solar_noon, day_length } = day.data.results;
-
-            return (
-                <tr>
-                    <td >
-                        { date }
-                    </td>
-                    <td>
-                        { sunrise }
-                    </td>
-                    <td>
-                        { sunset }
-                    </td>
-                    <td>
-                        { solar_noon }
-                    </td>
-                    <td>
-                        { day_length }
-                    </td>
-                </tr>
-                );
-        });
-
         return (
             <div >
                 <form onSubmit={this.handleSubmit}>
@@ -106,26 +85,7 @@ class Form extends Component {
                     <DateRangeSelector onRangeChange={this.onRangeChange}/>
                     <input type="submit" value="Submit"/>
                 </form>
-                <table>
-                    <tr>
-                        <td>
-                            Date:
-                        </td>
-                        <td>
-                            Sunrise:
-                        </td>
-                        <td>
-                            Sunset:
-                        </td>
-                        <td>
-                            rfNauticalAfternoon
-                        </td>
-                        <td>
-                            Day length:
-                        </td>
-                    </tr>
-                    { rows }
-                </table>
+                { this.renderTableData(this.state.solarData) }
             </div>
         )
     }
