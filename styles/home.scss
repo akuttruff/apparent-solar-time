@@ -1,26 +1,35 @@
 body {
   font-family: Helvetica, serif;
-  font-weight: 300;
-  font-size: 1.3em
-}
-
-h2 {
   font-weight: 200;
 }
 
+.header {
+  font-size: 1.5em;
+  color: #333;
+}
+
 label {
+  font-size: 1em;
+  margin: 10px 0px;
+}
+
+.example-text {
   font-style: italic;
+  color: #878787;
   padding: 10px 0;
-  margin: 10px 0;
+  margin-left: 20px;
+  margin-bottom: 10px;
 }
 
 input {
-  font-weight: 300;
-  font-size: 24px;
+  font-size: 1em;
   padding: 10px;
   margin: 10px;
   border-radius: 5px;
   border: 1px solid;
+  border-color: #878787;
+  color: #333;
+
 }
 
 .address {
@@ -33,12 +42,8 @@ input {
   flex-direction: row;
 }
 .grid .form {
-  display: flex;
-  flex-direction: column;
-  width: 30%;
+  width: 50%;
   margin: 30px;
-  justify-content: center;
-  align-items: center;
 }
 .grid .table {
   flex: 1;
@@ -47,23 +52,23 @@ input {
 }
 
 .table {
+  flex: 1;
   display: flex;
   flex-direction: column;
 
   .header {
-    font-size: .8em;
-    font-style: italic;
+    font-size: 1.5em;
 
     td {
-      padding: 0 5px;
+      padding: 0 20px;
     }
   }
 
   .data {
-    font-size: .7em;
+    font-size: 1em;
 
     td {
-      padding: 0 5px;
+      padding: 0 20px;
     }
   }
 
