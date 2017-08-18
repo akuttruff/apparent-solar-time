@@ -87,14 +87,20 @@ class Form extends Component {
                 <div className="form">
                     <form onSubmit={this.handleSubmit}>
                         <div className="address">
-                            <h2>Enter an address to calculate solar data</h2>
+                            <div className="header">Calculate Apparent Solar Time</div>
                             <label>
-                                Example: "400 SW 6th Ave, Portland, OR 97204"
+                                1. Enter an address as close as possible to the desired area
                             </label>
                             <input type="text" value={this.state.address} onChange={this.handleChange}/>
+                            <span className="example-text">
+                                Example: 2206 N Skidmore Ct, Portland, OR 97217
+                            </span>
+                            <label>
+                                2. Enter a date range of up to 14 days
+                            </label>
+                            <DateRangeSelector onRangeChange={this.onRangeChange}/>
                         </div>
-                        <DateRangeSelector onRangeChange={this.onRangeChange}/>
-                        <input type="submit" value="Submit"/>
+                        <input type="submit" value="Calculate"/>
                     </form>
                 </div>
                 <div className="table">
