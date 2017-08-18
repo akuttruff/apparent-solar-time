@@ -7,7 +7,6 @@ class DateRangeSelector extends Component {
         super(props);
 
         this.state = {
-            focusedInput: null,
             startDate: moment(),
             endDate: moment().add(7, 'days')
         };
@@ -17,42 +16,18 @@ class DateRangeSelector extends Component {
 
     handleSelect(range){
         this.props.onRangeChange(range);
-        // An object with two keys,
-        // 'startDate' and 'endDate' which are Momentjs objects.
     }
 
     render(){
         return (
             <div>
                 <DateRange
-                    onInit={() => {}}
+                    onInit={this.handleSelect}
                     onChange={this.handleSelect}
                 />
             </div>
         )
     }
-
-    // constructor(props) {
-    //     super(props);
-    //
-    // }
-    //
-    // handleRangeChange(startDate, endDate) {
-    //     this.setState({ startDate, endDate });
-    //     this.props.onRangeChange({startDate, endDate})
-    // }
-    //
-    // render() {
-    //     return (
-    //         <DateRangePicker
-    //             startDate={this.state.startDate}
-    //             endDate={this.state.endDate}
-    //             onDatesChange={({ startDate, endDate }) => this.handleRangeChange(startDate, endDate)}
-    //             focusedInput={this.state.focusedInput}
-    //             onFocusChange={focusedInput => this.setState({ focusedInput })}
-    //         />
-    //     )
-    // }
 }
 
 export default DateRangeSelector;
