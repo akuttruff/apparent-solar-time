@@ -76,16 +76,24 @@ class Form extends Component {
     render() {
         const { address, range, solarData } = this.state;
         return (
-            <div >
-                <form onSubmit={this.handleSubmit}>
-                    <label>
-                        Name:
-                        <input type="text" value={this.state.address} onChange={this.handleChange}/>
-                    </label>
-                    <DateRangeSelector onRangeChange={this.onRangeChange}/>
-                    <input type="submit" value="Submit"/>
-                </form>
-                { this.renderTableData(this.state.solarData) }
+
+            <div className="grid">
+                <div className="form">
+                    <form onSubmit={this.handleSubmit}>
+                        <div className="address">
+                            <h2>Enter an address to calculate solar data</h2>
+                            <label>
+                                Example: "400 SW 6th Ave, Portland, OR 97204"
+                            </label>
+                            <input type="text" value={this.state.address} onChange={this.handleChange}/>
+                        </div>
+                        <DateRangeSelector onRangeChange={this.onRangeChange}/>
+                        <input type="submit" value="Submit"/>
+                    </form>
+                </div>
+                <div className="table">
+                    { this.renderTableData(this.state.solarData) }
+                </div>
             </div>
         )
     }

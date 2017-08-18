@@ -1,3 +1,70 @@
-h1 {
-  color: tomato;
+body {
+  font-family: Helvetica, serif;
+  font-weight: 300;
+  font-size: 1.3em
+}
+
+h2 {
+  font-weight: 200;
+}
+
+label {
+  font-style: italic;
+  padding: 10px 0;
+  margin: 10px 0;
+}
+
+input {
+  font-weight: 300;
+  font-size: 24px;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  border: 1px solid;
+}
+
+.address {
+  display: flex;
+  flex-direction: column;
+}
+
+.grid {
+  display: flex;
+  flex-direction: row;
+}
+.grid .form {
+  display: flex;
+  flex-direction: column;
+  width: 30%;
+  margin: 30px;
+  justify-content: center;
+  align-items: center;
+}
+.grid .table {
+  flex: 1;
+  display: flex;
+  margin: 30px;
+}
+
+.table {
+  display: flex;
+  flex-direction: column;
+
+  .header {
+    font-size: .8em;
+    font-style: italic;
+
+    td {
+      padding: 0 5px;
+    }
+  }
+
+  .data {
+    font-size: .7em;
+
+    td {
+      padding: 0 5px;
+    }
+  }
+
 }

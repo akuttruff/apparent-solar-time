@@ -9,7 +9,7 @@ function findNauticalNoon(solarNoon, twilight) {
 
 function HeaderRow() {
     return (
-        <tr>
+        <tr className="header">
             <td> Date:</td>
             <td> Sunrise:</td>
             <td> Sunset:</td>
@@ -26,7 +26,7 @@ function Table({ solarData }) {
         const rfNauticalAfternoon = findNauticalNoon(solar_noon, nautical_twilight_end);
 
         return (
-            <tr>
+            <tr className="data">
                 <td > { date } </td>
                 <td> { sunrise } </td>
                 <td> { sunset } </td>
