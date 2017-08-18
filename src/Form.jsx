@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import DateRangeSelector from './DateRangeSelector.jsx';
 import 'react-dates/lib/css/_datepicker.css';
-import Table from './Table.jsx';
-import _ from 'lodash';
 import $ from 'jquery';
 import { apiKey } from '../config.js';
 
@@ -49,7 +47,7 @@ class Form extends Component {
                 type: 'GET',
                 success: (data) => {
                     Object.assign(data.results, { date });
-                    solarData.push({ data })
+                    solarData.push({ data });
                     this.setState({ solarData });
                 }
             })
@@ -73,16 +71,30 @@ class Form extends Component {
         const { address, range, solarData } = this.state;
 
         const rows = this.state.solarData.map((day) => {
-            const { sunrise, sunset } = day.data.results;
+            const { date, sunrise, sunset, solar_noon, day_length } = day.data.results;
             return (
-                <div key={Math.random()}>
-                    { sunrise }
-                </div>
+                <tr>
+                    <td >
+                        { date }
+                    </td>
+                    <td>
+                        { sunrise }
+                    </td>
+                    <td>
+                        { sunset }
+                    </td>
+                    <td>
+                        { solar_noon }
+                    </td>
+                    <td>
+                        { day_length }
+                    </td>
+                </tr>
                 );
         });
 
         return (
-            <div>
+            <div >
                 <form onSubmit={this.handleSubmit}>
                     <label>
                         Name:
@@ -91,8 +103,27 @@ class Form extends Component {
                     <DateRangeSelector onRangeChange={this.onRangeChange}/>
                     <input type="submit" value="Submit"/>
                 </form>
+                <table>
+                    <tr>
+                        <td>
+                            Date:
+                        </td>
+                        <td>
+                            Sunrise:
+                        </td>
+                        <td>
+                            Sunset:
+                        </td>
+                        <td>
+                            rfNauticalAfternoon
+                        </td>
+                        <td>
+                            Day length:
+                        </td>
+                    </tr>
+                    { rows }
+                </table>
 
-                { rows }
             </div>
         )
     }
