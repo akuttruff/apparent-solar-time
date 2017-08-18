@@ -3,6 +3,7 @@ import DateRangeSelector from './DateRangeSelector.jsx';
 import 'react-dates/lib/css/_datepicker.css';
 import $ from 'jquery';
 import { apiKey } from '../config.js';
+import moment from 'moment';
 
 class Form extends Component {
     constructor(props) {
@@ -70,8 +71,10 @@ class Form extends Component {
     render() {
         const { address, range, solarData } = this.state;
 
-        const rows = this.state.solarData.map((day) => {
+        const sortedData = this.state.solarData.reverse();
+        const rows = sortedData.map((day) => {
             const { date, sunrise, sunset, solar_noon, day_length } = day.data.results;
+
             return (
                 <tr>
                     <td >
@@ -123,7 +126,6 @@ class Form extends Component {
                     </tr>
                     { rows }
                 </table>
-
             </div>
         )
     }
