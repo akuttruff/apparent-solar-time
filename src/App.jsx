@@ -44,7 +44,6 @@ class App extends Component {
         let solarData = [];
 
         dates.forEach((date) => {
-            console.log('lat', lat, lng)
             $.ajax({
                 url: `https://api.sunrise-sunset.org/json?lat=${lat.toString()}&lng=${lng.toString()}&date=${date}`,
                 type: 'GET',
@@ -52,7 +51,6 @@ class App extends Component {
                     Object.assign(data.results, { date });
                     solarData.push({ data });
                     this.setState({ solarData });
-                    console.log(solarData)
                 }
             })
         });
@@ -68,8 +66,7 @@ class App extends Component {
             url: `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${apiKey}`,
             type: 'GET',
             success: (data) => {
-                this.onFetchLocationSuccess(data)
-                console.log('location data', data)
+                this.onFetchLocationSuccess(data);
             }
         });
 

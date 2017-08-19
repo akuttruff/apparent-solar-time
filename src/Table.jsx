@@ -3,8 +3,24 @@ import moment from 'moment';
 import _ from 'lodash';
 
 // the time elapsed from solar noon until the end of nautical twilight
-function findNauticalNoon(solarNoon, twilight) {
 
+function formatDates(solarData) {
+
+}
+
+function sortDataByDate(solarData) {
+    return _.sortBy(solarData, (data) => {
+        return new moment(data.date)
+    }).reverse();
+}
+
+function findNauticalNoon(solarNoon, twilight) {
+    const startTime = moment(solarNoon);
+    const endTime = moment(twilight)
+    console.log('startTime', startTime, 'endTime', endTime)
+    var duration = moment.duration(endTime.diff(startTime));
+    // console.log({duration})
+    return duration.asHours();
 }
 
 function HeaderRow() {
@@ -13,24 +29,25 @@ function HeaderRow() {
             <td> Date:</td>
             <td> Sunrise:</td>
             <td> Sunset:</td>
-            <td> rfNoon:</td>
+            <td> rfNauticalNoon:</td>
             <td> Length:</td>
         </tr>
     );
 }
 
 function Table({ solarData }) {
-    const sortedData = solarData.reverse();
+    const sortedData = sortDataByDate(solarData);
+
     const dataRows = sortedData.map((day) => {
         const { date, sunrise, sunset, solar_noon, day_length, nautical_twilight_end } = day.data.results;
         const rfNauticalAfternoon = findNauticalNoon(solar_noon, nautical_twilight_end);
 
         return (
-            <tr className="data">
+            <tr className="data" key={date}>
                 <td > { date } </td>
                 <td> { sunrise } </td>
                 <td> { sunset } </td>
-                <td> { rfNauticalAfternoon } </td>
+                <td> { solar_noon } - { nautical_twilight_end } </td>
                 <td> { day_length } </td>
             </tr>
         );
