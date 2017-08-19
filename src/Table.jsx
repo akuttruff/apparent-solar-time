@@ -38,8 +38,10 @@ function Table({ solarData }) {
 
     return (
         <table>
+            <tbody>
             <HeaderRow />
             { dataRows  }
+            </tbody>
         </table>
     );
 }
