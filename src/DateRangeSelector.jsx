@@ -6,6 +6,11 @@ class DateRangeSelector extends Component {
     constructor(props) {
         super(props);
         this.handleSelect = this.handleSelect.bind(this);
+
+        this.state = {
+            startDate: moment(),
+            endDate: moment().add(7, 'days')
+        }
     }
 
     handleSelect(range){
@@ -14,7 +19,8 @@ class DateRangeSelector extends Component {
 
     render(){
         const defaultStartDate = moment();
-        const defaultEndDate = moment(defaultStartDate).add(7, 'days')
+        const defaultEndDate = moment(defaultStartDate).add(7, 'days');
+        const maxDate = this.state.startDate.add(14, 'days');
 
         return (
             <div>
@@ -23,6 +29,8 @@ class DateRangeSelector extends Component {
                     onChange={this.handleSelect}
                     calendars={2}
                     linkedCalendars={true}
+                    minDate={defaultStartDate}
+                    maxDate={maxDate}
                     startDate={defaultStartDate}
                     endDate={defaultEndDate}
                 />
