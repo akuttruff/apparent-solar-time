@@ -32,6 +32,7 @@
     "karma-webpack": "^2.0.4",
     "lodash": "^4.17.4",
     "moment": "^2.18.1",
+    "moment-timezone": "^0.5.13",
     "node-sass": "^4.5.2",
     "react": "^15.5.4",
     "react-addons-shallow-compare": "^15.6.0",

@@ -1,10 +1,11 @@
 import React, { Component } from 'react';
-import DateRangeSelector from './DateRangeSelector.jsx';
 import 'react-dates/lib/css/_datepicker.css';
+import moment from 'moment';
+import 'moment-timezone'
 import $ from 'jquery';
 import { geocodeApiKey, timezoneApiKey } from '../config.js';
+import DateRangeSelector from './DateRangeSelector.jsx';
 import { Table } from './Table.jsx';
-import moment from 'moment';
 
 class App extends Component {
     constructor(props) {
@@ -18,7 +19,7 @@ class App extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        this.fetchLocation(this.state.address)
+        this.getLocation(this.state.address)
     }
 
     handleChange(event) {
@@ -39,22 +40,36 @@ class App extends Component {
         return dates;
     }
 
+    formatTimes(solarData, timezone) {
+        return solarData.map((day) => {
+            const { date, sunrise, sunset, solar_noon, day_length, nautical_twilight_end } = day.data.results;
+            const displayFormat = 'h:mm:ss A';
+
+            return {
+                date,
+                sunrise: moment.tz(`${ date } ${sunrise}`, timezone).format(displayFormat),
+                sunset: moment.tz(`${ date } ${sunset}`, timezone).format(displayFormat),
+                solar_noon: moment.tz(`${ date } ${solar_noon}`, timezone).format(displayFormat),
+                nautical_twilight_end: moment.tz(`${ date } ${nautical_twilight_end}`, timezone).format(displayFormat),
+                day_length
+            };
+        });
+    }
+
     getTimezone(solarData, lat, lng) {
         const timestamp = moment().unix();
         $.ajax({
             url: `https://maps.googleapis.com/maps/api/timezone/json?location=${lat},${lng}&timestamp=${timestamp}&key=${timezoneApiKey}`,
             type: 'GET',
             success: (data) => {
-
-                solarData.forEach((date) => {
-                    Object.assign(date.data.results, { timeZoneId: data.timeZoneId })
-                });
-                this.setState({ solarData });
+                const { timeZoneId } = data;
+                const formattedData = this.formatTimes(solarData, timeZoneId);
+                this.setState({ solarData: formattedData });
             }
         })
     }
 
-    fetchSolarData(lat, lng) {
+    getSolarData(lat, lng) {
         const dates = this.getDateRange(this.props.range);
         let solarData = [];
 
@@ -65,21 +80,20 @@ class App extends Component {
                 success: (data) => {
                     Object.assign(data.results, { date });
                     solarData.push({ data });
-                    this.setState({ solarData });
                     this.getTimezone(solarData, lat, lng)
                 }
             })
         });
     }
 
-    fetchLocation(address) {
+    getLocation(address) {
         $.ajax({
             url: `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${geocodeApiKey}`,
             type: 'GET',
             success: (data) => {
                 const geoData = data.results[0].geometry.location;
                 const { lat, lng } = geoData;
-                this.fetchSolarData(lat, lng);
+                this.getSolarData(lat, lng);
             }
         });
     }
