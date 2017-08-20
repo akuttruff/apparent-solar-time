@@ -22,10 +22,6 @@ function formatTime(time) {
     getTimezone(solarData, geoData);
 }
 
-function onTimezoneSuccess(data) {
-
-}
-
 function HeaderRow() {
     return (
         <tr className="header">
@@ -38,43 +34,32 @@ function HeaderRow() {
     );
 }
 
-class Table extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {solarData: [], geoData: []};
-    }
+function Table({ solarData }) {
+    const sortedData = sortDataByDate(solarData);
+    const dataRows = sortedData.map((day) => {
 
-
-
-    render() {
-        const { solarData } = this.props;
-        const sortedData = sortDataByDate(solarData);
-
-        const dataRows = sortedData.map((day) => {
-
-            const { date, sunrise, sunset, solar_noon, day_length, nautical_twilight_end } = day.data.results;
-            const rfNauticalAfternoon = findNauticalNoon(solar_noon, nautical_twilight_end);
-
-            return (
-                <tr className="data" key={date}>
-                    <td > { date } </td>
-                    <td> { sunrise } </td>
-                    <td> { sunset } </td>
-                    <td> { solar_noon } - { nautical_twilight_end } </td>
-                    <td> { day_length } </td>
-                </tr>
-            );
-        });
+        const { date, sunrise, sunset, solar_noon, day_length, nautical_twilight_end } = day.data.results;
+        const rfNauticalAfternoon = findNauticalNoon(solar_noon, nautical_twilight_end);
 
         return (
-            <table>
-                <tbody>
-                <HeaderRow />
-                { dataRows  }
-                </tbody>
-            </table>
+            <tr className="data" key={date}>
+                <td > { date } </td>
+                <td> { sunrise } </td>
+                <td> { sunset } </td>
+                <td> { solar_noon } - { nautical_twilight_end } </td>
+                <td> { day_length } </td>
+            </tr>
         );
-    }
+    });
+
+    return (
+        <table>
+            <tbody>
+            <HeaderRow />
+            { dataRows  }
+            </tbody>
+        </table>
+    );
 }
 
 export { Table, HeaderRow };

@@ -72,19 +72,14 @@ class App extends Component {
         });
     }
 
-    onFetchLocationSuccess(geoData) {
-        const { lat, lng } = geoData;
-        this.fetchSolarData(lat, lng);
-    }
-
     fetchLocation(address) {
         $.ajax({
             url: `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${geocodeApiKey}`,
             type: 'GET',
             success: (data) => {
                 const geoData = data.results[0].geometry.location;
-                this.setState({ geoData });
-                this.onFetchLocationSuccess(geoData);
+                const { lat, lng } = geoData;
+                this.fetchSolarData(lat, lng);
             }
         });
     }
