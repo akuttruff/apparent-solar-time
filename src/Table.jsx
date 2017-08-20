@@ -1,12 +1,8 @@
 import React, { Component } from 'react';
 import moment from 'moment';
+import $ from 'jquery';
 import _ from 'lodash';
-
-// the time elapsed from solar noon until the end of nautical twilight
-
-function formatDates(solarData) {
-
-}
+import { timezoneApiKey } from '../config.js';
 
 function sortDataByDate(solarData) {
     return _.sortBy(solarData, (data) => {
@@ -16,11 +12,18 @@ function sortDataByDate(solarData) {
 
 function findNauticalNoon(solarNoon, twilight) {
     const startTime = moment(solarNoon);
-    const endTime = moment(twilight)
-    console.log('startTime', startTime, 'endTime', endTime)
+    const endTime = moment(twilight);
     var duration = moment.duration(endTime.diff(startTime));
-    // console.log({duration})
     return duration.asHours();
+}
+
+function formatTime(time) {
+    const { solarData, geoData } = this.props;
+    getTimezone(solarData, geoData);
+}
+
+function onTimezoneSuccess(data) {
+
 }
 
 function HeaderRow() {
@@ -35,32 +38,43 @@ function HeaderRow() {
     );
 }
 
-function Table({ solarData }) {
-    const sortedData = sortDataByDate(solarData);
+class Table extends Component {
+    constructor(props) {
+        super(props);
+        this.state = {solarData: [], geoData: []};
+    }
 
-    const dataRows = sortedData.map((day) => {
-        const { date, sunrise, sunset, solar_noon, day_length, nautical_twilight_end } = day.data.results;
-        const rfNauticalAfternoon = findNauticalNoon(solar_noon, nautical_twilight_end);
+
+
+    render() {
+        const { solarData } = this.props;
+        const sortedData = sortDataByDate(solarData);
+
+        const dataRows = sortedData.map((day) => {
+
+            const { date, sunrise, sunset, solar_noon, day_length, nautical_twilight_end } = day.data.results;
+            const rfNauticalAfternoon = findNauticalNoon(solar_noon, nautical_twilight_end);
+
+            return (
+                <tr className="data" key={date}>
+                    <td > { date } </td>
+                    <td> { sunrise } </td>
+                    <td> { sunset } </td>
+                    <td> { solar_noon } - { nautical_twilight_end } </td>
+                    <td> { day_length } </td>
+                </tr>
+            );
+        });
 
         return (
-            <tr className="data" key={date}>
-                <td > { date } </td>
-                <td> { sunrise } </td>
-                <td> { sunset } </td>
-                <td> { solar_noon } - { nautical_twilight_end } </td>
-                <td> { day_length } </td>
-            </tr>
+            <table>
+                <tbody>
+                <HeaderRow />
+                { dataRows  }
+                </tbody>
+            </table>
         );
-    });
-
-    return (
-        <table>
-            <tbody>
-            <HeaderRow />
-            { dataRows  }
-            </tbody>
-        </table>
-    );
+    }
 }
 
 export { Table, HeaderRow };

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import DateRangeSelector from './DateRangeSelector.jsx';
 import 'react-dates/lib/css/_datepicker.css';
 import $ from 'jquery';
-import { apiKey } from '../config.js';
+import { geocodeApiKey, timezoneApiKey } from '../config.js';
 import { Table } from './Table.jsx';
 import moment from 'moment';
 
@@ -39,40 +39,57 @@ class App extends Component {
         return dates;
     }
 
+    getTimezone(solarData, lat, lng) {
+        const timestamp = moment().unix();
+        $.ajax({
+            url: `https://maps.googleapis.com/maps/api/timezone/json?location=${lat},${lng}&timestamp=${timestamp}&key=${timezoneApiKey}`,
+            type: 'GET',
+            success: (data) => {
+
+                solarData.forEach((date) => {
+                    Object.assign(date.data.results, { timeZoneId: data.timeZoneId })
+                });
+                this.setState({ solarData });
+            }
+        })
+    }
+
     fetchSolarData(lat, lng) {
         const dates = this.getDateRange(this.props.range);
         let solarData = [];
 
         dates.forEach((date) => {
             $.ajax({
-                url: `https://api.sunrise-sunset.org/json?lat=${lat.toString()}&lng=${lng.toString()}&date=${date}`,
+                url: `https://api.sunrise-sunset.org/json?lat=${lat}&lng=${lng}&date=${date}`,
                 type: 'GET',
                 success: (data) => {
                     Object.assign(data.results, { date });
                     solarData.push({ data });
                     this.setState({ solarData });
+                    this.getTimezone(solarData, lat, lng)
                 }
             })
         });
     }
 
-    onFetchLocationSuccess(data) {
-        const { lat, lng } = data.results[0].geometry.location;
-        const formattedData = this.fetchSolarData(lat, lng);
+    onFetchLocationSuccess(geoData) {
+        const { lat, lng } = geoData;
+        this.fetchSolarData(lat, lng);
     }
 
     fetchLocation(address) {
         $.ajax({
-            url: `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${apiKey}`,
+            url: `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${geocodeApiKey}`,
             type: 'GET',
             success: (data) => {
-                this.onFetchLocationSuccess(data);
+                const geoData = data.results[0].geometry.location;
+                this.setState({ geoData });
+                this.onFetchLocationSuccess(geoData);
             }
         });
-
     }
 
-    renderTableData(solarData) {
+    renderTableData(solarData, geoData) {
         return <Table solarData={solarData} />
     }
 
@@ -101,7 +118,7 @@ class App extends Component {
                     </form>
                 </div>
                 <div className="table">
-                    { this.renderTableData(this.state.solarData) }
+                    { this.renderTableData(this.state.solarData, this.state.geoData) }
                 </div>
             </div>
         )
