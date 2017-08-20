@@ -98,10 +98,6 @@ class App extends Component {
         });
     }
 
-    renderTableData(solarData, geoData) {
-        return <Table solarData={solarData} />
-    }
-
     render() {
         const { address, range, solarData } = this.state;
         return (
@@ -114,7 +110,7 @@ class App extends Component {
                             <label>
                                 1. Enter an address as close as possible to the desired area
                             </label>
-                            <input type="text" value={this.state.address} onChange={this.handleChange}/>
+                            <input type="text" value={address} onChange={this.handleChange}/>
                             <span className="example-text">
                                 Example: 2206 N Skidmore Ct, Portland, OR 97217
                             </span>
@@ -127,7 +123,7 @@ class App extends Component {
                     </form>
                 </div>
                 <div className="table">
-                    { this.renderTableData(this.state.solarData, this.state.geoData) }
+                    <Table solarData={solarData}/>
                 </div>
             </div>
         )
