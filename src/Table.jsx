@@ -16,7 +16,7 @@ function HeaderRow() {
             <td> Sunrise</td>
             <td> Sunset</td>
             <td> rfNauticalNoon</td>
-            <td> Day Length (H:M:S)</td>
+            <td> Day Length</td>
         </tr>
     );
 }
@@ -33,7 +33,7 @@ function Table({ solarData }) {
                 <td> { sunrise } </td>
                 <td> { sunset } </td>
                 <td> { solar_noon } - { nautical_twilight_end } </td>
-                <td> { day_length } </td>
+                <td> { day_length } (H:M:S) </td>
             </tr>
         );
     });
@@ -41,7 +41,7 @@ function Table({ solarData }) {
     return (
         <table>
             <tbody>
-            <HeaderRow />
+            { !_.isEmpty(solarData) && <HeaderRow /> }
             { dataRows  }
             </tbody>
         </table>
