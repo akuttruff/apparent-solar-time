@@ -7,7 +7,6 @@ import { geocodeApiKey, timezoneApiKey } from '../config.js';
 import DateRangeSelector from './DateRangeSelector.jsx';
 import { Table } from './Table.jsx';
 import AddressForm from './AddressForm.jsx';
-import { getCoordinates, getTimezone, getSolarData } from './api.jsx'
 
 class App extends Component {
     constructor(props) {
@@ -42,7 +41,7 @@ class App extends Component {
         return dates;
     }
 
-    formatTimes(solarData, timezone) {
+    adjustTimesForTimezone(solarData, timezone) {
         return solarData.map((day) => {
             const { date, sunrise, sunset, solar_noon, day_length, nautical_twilight_end } = day.data.results;
             const displayFormat = 'h:mm:ss A';
@@ -69,14 +68,14 @@ class App extends Component {
             type: 'GET',
             success: (data) => {
                 const { timeZoneId } = data;
-                const formattedData = this.formatTimes(solarData, timeZoneId);
-                this.setState({ solarData: formattedData });
+                const solarDataForTimezone = this.adjustTimesForTimezone(solarData, timeZoneId);
+                this.setState({ solarData: solarDataForTimezone });
             }
         })
     }
 
     getSolarData(lat, lng) {
-        const dates = this.getDateRange(this.props.range);
+        const dates = this.getDateRange(this.state.range);
         let solarData = [];
 
         dates.forEach((date) => {
