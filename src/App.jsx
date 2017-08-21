@@ -6,6 +6,8 @@ import $ from 'jquery';
 import { geocodeApiKey, timezoneApiKey } from '../config.js';
 import DateRangeSelector from './DateRangeSelector.jsx';
 import { Table } from './Table.jsx';
+import AddressForm from './AddressForm.jsx';
+import { getCoordinates, getTimezone, getSolarData } from './api.jsx'
 
 class App extends Component {
     constructor(props) {
@@ -30,8 +32,8 @@ class App extends Component {
         this.setState({ range });
     }
 
-    getDateRange() {
-        const now = this.state.range.startDate.clone(), dates = [];
+    getDateRange(range) {
+        const now = range.startDate.clone(), dates = [];
 
         while (now.isBefore(this.state.range.endDate) || now.isSame(this.state.range.endDate)) {
             dates.push(now.format('YYYY-MM-DD'));
@@ -108,20 +110,9 @@ class App extends Component {
             <div className="grid">
                 <div className="form">
                     <form onSubmit={this.handleSubmit}>
-                        <div className="address">
-                            <div className="header">Calculate Apparent Solar Time</div>
-                            <label>
-                                1. Enter an address as close as possible to the desired area
-                            </label>
-                            <input type="text" value={address} onChange={this.handleChange}/>
-                            <span className="example-text">
-                                Example: 2206 N Skidmore Ct, Portland, OR 97217
-                            </span>
-                            <label>
-                                2. Enter a date range of up to 14 days
-                            </label>
-                            <DateRangeSelector onRangeChange={this.onRangeChange}/>
-                        </div>
+                        <AddressForm address={address}
+                                     handleChange={this.handleChange}/>
+                        <DateRangeSelector onRangeChange={this.onRangeChange}/>
                         <input type="submit" value="Calculate"/>
                     </form>
                 </div>
