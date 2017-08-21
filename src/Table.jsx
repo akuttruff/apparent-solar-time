@@ -29,11 +29,11 @@ function Table({ solarData }) {
 
         return (
             <tr className="data" key={date}>
-                <td> { date } </td>
-                <td> { sunrise } </td>
-                <td> { sunset } </td>
-                <td> { solar_noon } - { nautical_twilight_end } </td>
-                <td> { day_length } (H:M:S) </td>
+                <td id="date">{ date }</td>
+                <td id="sunrise">{ sunrise }</td>
+                <td id="sunset">{ sunset }</td>
+                <td id="nautical-noon">{ solar_noon } - { nautical_twilight_end }</td>
+                <td id="day-length">{ day_length } (H:M:S)</td>
             </tr>
         );
     });
