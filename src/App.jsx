@@ -19,7 +19,7 @@ class App extends Component {
 
     handleSubmit(event) {
         event.preventDefault();
-        this.getLocation(this.state.address)
+        this.getCoordinates(this.state.address)
     }
 
     handleChange(event) {
@@ -44,13 +44,17 @@ class App extends Component {
         return solarData.map((day) => {
             const { date, sunrise, sunset, solar_noon, day_length, nautical_twilight_end } = day.data.results;
             const displayFormat = 'h:mm:ss A';
+            const formattedSunrise = moment.tz(`${ date } ${sunrise}`, timezone).format(displayFormat);
+            const formattedSunset = moment.tz(`${ date } ${sunset}`, timezone).format(displayFormat);
+            const formattedNoon = moment.tz(`${ date } ${solar_noon}`, timezone).format(displayFormat);
+            const formattedTwilight = moment.tz(`${ date } ${nautical_twilight_end}`, timezone).format(displayFormat);
 
             return {
                 date,
-                sunrise: moment.tz(`${ date } ${sunrise}`, timezone).format(displayFormat),
-                sunset: moment.tz(`${ date } ${sunset}`, timezone).format(displayFormat),
-                solar_noon: moment.tz(`${ date } ${solar_noon}`, timezone).format(displayFormat),
-                nautical_twilight_end: moment.tz(`${ date } ${nautical_twilight_end}`, timezone).format(displayFormat),
+                sunrise: formattedSunrise,
+                sunset: formattedSunset,
+                solar_noon: formattedNoon,
+                nautical_twilight_end: formattedTwilight,
                 day_length
             };
         });
@@ -86,7 +90,7 @@ class App extends Component {
         });
     }
 
-    getLocation(address) {
+    getCoordinates(address) {
         $.ajax({
             url: `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${geocodeApiKey}`,
             type: 'GET',
@@ -99,9 +103,8 @@ class App extends Component {
     }
 
     render() {
-        const { address, range, solarData } = this.state;
+        const { address, solarData } = this.state;
         return (
-
             <div className="grid">
                 <div className="form">
                     <form onSubmit={this.handleSubmit}>
