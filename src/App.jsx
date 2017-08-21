@@ -41,6 +41,10 @@ class App extends Component {
         return dates;
     }
 
+    formatDate(date) {
+        return moment(date).format('MMM D, YYYY')
+    }
+
     adjustTimesForTimezone(solarData, timezone) {
         return solarData.map((day) => {
             const { date, sunrise, sunset, solar_noon, day_length, nautical_twilight_end } = day.data.results;
@@ -51,7 +55,7 @@ class App extends Component {
             const formattedTwilight = moment.tz(`${ date } ${nautical_twilight_end}`, timezone).format(displayFormat);
 
             return {
-                date,
+                date: this.formatDate(date),
                 sunrise: formattedSunrise,
                 sunset: formattedSunset,
                 solar_noon: formattedNoon,
