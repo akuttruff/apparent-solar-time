@@ -11,7 +11,7 @@ import AddressForm from './AddressForm.jsx';
 class App extends Component {
     constructor(props) {
         super(props);
-        this.state = {address: '', range: {}, solarData: []};
+        this.state = { address: '', range: {}, solarData: [] };
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
@@ -19,12 +19,13 @@ class App extends Component {
     }
 
     handleSubmit(event) {
+        const { address, range } = this.state;
         event.preventDefault();
-        this.getCoordinates(this.state.address)
+        this.getCoordinates(address, range);
     }
 
     handleChange(event) {
-        this.setState({address: event.target.value});
+        this.setState({ address: event.target.value });
     }
 
     onRangeChange(range) {
@@ -34,7 +35,7 @@ class App extends Component {
     getDateRange(range) {
         const now = range.startDate.clone(), dates = [];
 
-        while (now.isBefore(this.state.range.endDate) || now.isSame(this.state.range.endDate)) {
+        while (now.isBefore(range.endDate) || now.isSame(range.endDate)) {
             dates.push(now.format('YYYY-MM-DD'));
             now.add('days', 1);
         }
@@ -78,8 +79,8 @@ class App extends Component {
         })
     }
 
-    getSolarData(lat, lng) {
-        const dates = this.getDateRange(this.state.range);
+    getSolarData(lat, lng, range) {
+        const dates = this.getDateRange(range);
         let solarData = [];
 
         dates.forEach((date) => {
@@ -95,14 +96,14 @@ class App extends Component {
         });
     }
 
-    getCoordinates(address) {
+    getCoordinates(address, range) {
         $.ajax({
             url: `https://maps.googleapis.com/maps/api/geocode/json?address=${address}&key=${geocodeApiKey}`,
             type: 'GET',
             success: (data) => {
                 const geoData = data.results[0].geometry.location;
                 const { lat, lng } = geoData;
-                this.getSolarData(lat, lng);
+                this.getSolarData(lat, lng, range);
             }
         });
     }
