@@ -1,7 +1,16 @@
 Apparent-Solar-Time
 -------------------
 
-This application calculates solar data for a specific location and time range.
+This application calculates solar data for a specific location and time range. It leverages the [Google Maps API](https://developers.google.com/maps/documentation/javascript/get-api-key) and the [Sunrise-Sunset API](https://sunrise-sunset.org/api). 
+
+In order to run an instance of this demo application, you'll need to generate your own API keys, and export them from a `~/config.js` file:  
+
+```
+const geocodeApiKey = 'YOUR_OWN_GEOCODE_KEY';
+const timezoneApiKey = 'YOUR_OWN_TIMEZONE_KEY';
+
+export { geocodeApiKey, timezoneApiKey };
+```
 
 ## Installation
 
